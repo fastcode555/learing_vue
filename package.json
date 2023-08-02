@@ -3,16 +3,27 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
     "build": "vite build",
+    "dev": "vite",
     "preview": "vite preview"
   },
   "dependencies": {
-    "pinia": "^2.1.4",
-    "vue": "^3.3.4"
+    "@vueuse/core": "^9.13.0",
+    "dayjs": "^1.11.7",
+    "highlight.js": "^11.7.0",
+    "katex": "^0.16.4",
+    "marked": "^4.2.12",
+    "naive-ui": "^2.34.3",
+    "pinia": "^2.0.32",
+    "sass": "^1.59.3",
+    "vue": "^3.2.47",
+    "vue-i18n": "^9.2.2",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
-    "vite": "^4.3.9"
+    "style-resources-loader": "^1.4.1",
+    "vite": "^4.3.9",
+    "vue-cli-plugin-style-resources-loader": "~0.1.5"
   }
 }
