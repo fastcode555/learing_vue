@@ -1,5 +1,5 @@
 <template>
-  <div class="main-box" :style="`height: ${height}rem;`">
+  <div class="main-box" :style="`height: ${height}rem;width: ${width}rem`">
     <div class="img_drag_change">
       <div ref="imgBox" class="img-box">
         <div ref="beforeImg" class="before-img">
@@ -8,7 +8,7 @@
         </div>
         <div ref="afterImg" class="after-img" :style="`left: ${left}%;`">
           <div :style="`right: ${left}%;`" class="info">After</div>
-          <img :style="`left: -${left}%;`" :src="props.afterUrl"/>
+          <img :style="`left: -${left}%;`" :src="props.afterUrl" class="image-aspect"/>
         </div>
       </div>
       <!-- 分割线 -->
@@ -25,21 +25,25 @@
 <script setup>
 import { defineProps, ref, onMounted } from 'vue';
 // 引入两张图片
-import img_left from '@/assets/img/common/img1.jpg';
-import img_right from '@/assets/img/common/img2.jpg';
+import imageLeft from '@/assets/img/common/img1.jpg';
+import imageRight from '@/assets/img/common/img2.jpg';
 // 父组件传值
 let props = defineProps({
   height: {
     type: Number,
     default: 0,
   },
+  width: {
+    type: Number,
+    default: 0,
+  },
   beforeUrl: {
     type: String,
-    default: img_left,
+    default: imageLeft,
   },
   afterUrl: {
     type: String,
-    default: img_right
+    default: imageRight
   }
 })
 
@@ -51,6 +55,7 @@ let afterImg = ref(null); // 第二张图片
 let left = ref(0); // 初始的 left
 let rem = ref(0.0625); // px转rem
 let height = ref(500); //默认高度
+let width = ref(500); //默认宽度
 let divide_line = ref('null'); // 分割线节点
 
 if (props.height > 0) {
@@ -61,6 +66,13 @@ if (props.height > 0) {
   height.value = height.value * rem.value;
 }
 
+if (props.width > 0) {
+  width.value = props.width * rem.value;
+} else if (props.width == 'auto') {
+  width = 'auto';
+} else {
+  width.value = width.value * rem.value;
+}
 
 onMounted(() => {
   imgBoxWidth.value = imgBox.value.offsetWidth;
@@ -205,10 +217,10 @@ const mousedown = (e) => {
 
   .icon-box {
     position: absolute;
-    left: -1rem;
+    left: -32rem;
     font-size: 1rem;
     height: 500px;
-    width: 30px;
+    width: 1000px;
     color: #dddddd;
     display: flex;
     align-items: center;
