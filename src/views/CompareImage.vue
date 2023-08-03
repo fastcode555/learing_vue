@@ -3,22 +3,19 @@
     <div class="img_drag_change">
       <div ref="imgBox" class="img-box">
         <div ref="beforeImg" class="before-img">
-          <div class="info">{{ props.info[1].title }}</div>
-          <img :src="props.info[1].url"/>
+          <div class="info">Before</div>
+          <img :src="props.beforeUrl"/>
         </div>
         <div ref="afterImg" class="after-img" :style="`left: ${left}%;`">
-          <div :style="`right: ${left}%;`" class="info">{{ props.info[0].title }}</div>
-          <img :style="`left: -${left}%;`" :src="props.info[0].url"/>
+          <div :style="`right: ${left}%;`" class="info">After</div>
+          <img :style="`left: -${left}%;`" :src="props.afterUrl"/>
         </div>
       </div>
       <!-- 分割线 -->
       <div class="divide_line" ref="divide_line" :style="`left: ${left}%;`">
         <div class="item">
           <!-- 需要增加手机端兼容事件 -->
-          <div class="icon-box" @touchstart="mousedown" @mousedown="mousedown">
-            <span> 左s </span>
-            <span> 右 </span>
-          </div>
+          <div class="icon-box" @touchstart="mousedown" @mousedown="mousedown"/>
         </div>
       </div>
     </div>
@@ -36,20 +33,13 @@ let props = defineProps({
     type: Number,
     default: 0,
   },
-  info: {
-    type: Array,
-    default: () => {
-      return [
-        {
-          url: img_right,
-          title: 'After',
-        },
-        {
-          url: img_left,
-          title: 'Before',
-        }
-      ]
-    }
+  beforeUrl: {
+    type: String,
+    default: img_left,
+  },
+  afterUrl: {
+    type: String,
+    default: img_right
   }
 })
 
@@ -90,10 +80,9 @@ let range = function (num, min, max) {
 // 需要加兼容手机端事件
 // 鼠标按下事件
 const mousedown = (e) => {
-  console.log('按下')
   // 拿到盒子宽度
   imgBoxWidth.value = imgBox.value.offsetWidth;
-  let min = 16 / imgBoxWidth.value * 100;
+  let min = 8 / imgBoxWidth.value * 100;
   let startX = e.clientX || e.touches[0].pageX; // 鼠标按下的初始 clientX 值
   let divideLineLeft = divide_line.value.offsetLeft; //获取盒子的初始left值
 
@@ -133,7 +122,6 @@ const mousedown = (e) => {
   position: relative;
   top: 12px;
   height: calc(100% - 24px);
-
 }
 
 .img-box {
@@ -143,7 +131,7 @@ const mousedown = (e) => {
   height: calc(100% - 16px);
   overflow: hidden;
   position: relative;
-  border-radius: 15px;
+  border-radius: 12px;
 
   > div.after-img {
     position: absolute;
@@ -162,12 +150,19 @@ const mousedown = (e) => {
 
     .info {
       position: absolute;
-      color: #fff;
+      color: #000000;
+      background-color: white;
       z-index: 1;
-      font-size: 20px;
+      opacity: 0.72;
+      font-size: 14px;
       white-space: nowrap;
       overflow: hidden;
-      padding: 20px;
+      height: 22px;
+      padding-left: 10px;
+      padding-right: 10px;
+      align-content: center;
+      border-radius: 4px;
+      margin: 1rem;
     }
 
     > img {
@@ -212,6 +207,8 @@ const mousedown = (e) => {
     position: absolute;
     left: -1rem;
     font-size: 1rem;
+    height: 500px;
+    width: 30px;
     color: #dddddd;
     display: flex;
     align-items: center;
