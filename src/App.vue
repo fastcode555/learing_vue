@@ -1,7 +1,13 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
 import CompareImage from '@/views/CompareImage.vue';
 import TheWelcome from './components/TheWelcome.vue'
+
+const scale = ref('1:1')
+
+function changeScale(scaleText) {
+  scale.value = scaleText
+}
+
 </script>
 
 <template>
@@ -9,6 +15,14 @@ import TheWelcome from './components/TheWelcome.vue'
     <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125"/>
 
     <div class="wrapper">
+      <!--      <div class="flow">
+              <n-button @click="changeScale('1:1')">1:1</n-button>
+              <n-button @click="changeScale('1:2')">1:2</n-button>
+              <n-button @click="changeScale('3:4')">3:4</n-button>
+              <n-button @click="changeScale('9:16')">9:16</n-button>
+              <n-button @click="changeScale('16:9')">16:9</n-button>
+              <n-button @click="changeScale('4:3')">4:3</n-button>
+            </div>-->
       <CompareImage/>
     </div>
   </header>
