@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { defineProps, ref, onMounted } from 'vue';
+import { defineProps, ref, onMounted, computed } from 'vue';
 // 引入两张图片
 import imageLeft from '@/assets/img/common/img1.jpg';
 import imageRight from '@/assets/img/common/img2.jpg';
@@ -33,9 +33,9 @@ let props = defineProps({
     type: Number,
     default: 0,
   },
-  width: {
-    type: Number,
-    default: 0,
+  scale: {
+    type: String,
+    default: '1:1',
   },
   beforeUrl: {
     type: String,
@@ -58,20 +58,18 @@ let height = ref(500); //默认高度
 let width = ref(500); //默认宽度
 let divide_line = ref('null'); // 分割线节点
 
+const scales = props.scale.split(':')
+//width:height
+const scale = parseInt(scales[0].trim()) / parseInt(scales[1].trim())
+
 if (props.height > 0) {
   height.value = props.height * rem.value;
+  width.value = height.value * scale
 } else if (props.height == 'auto') {
   height = 'auto';
 } else {
   height.value = height.value * rem.value;
-}
-
-if (props.width > 0) {
-  width.value = props.width * rem.value;
-} else if (props.width == 'auto') {
-  width = 'auto';
-} else {
-  width.value = width.value * rem.value;
+  width.value = height.value * scale
 }
 
 onMounted(() => {
@@ -123,7 +121,6 @@ const mousedown = (e) => {
 </script>
 
 <style lang="scss" scoped>
-
 .main-box {
   height: 100%;
 }
