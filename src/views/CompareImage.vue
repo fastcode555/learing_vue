@@ -57,6 +57,7 @@ let rem = ref(0.0625); // px转rem
 let height = ref(500); //默认高度
 let width = ref(500); //默认宽度
 let divide_line = ref('null'); // 分割线节点
+let lastStartX = 0.0
 
 const scales = props.scale.split(':')
 //width:height
@@ -97,9 +98,15 @@ const mousedown = (e) => {
   let divideLineLeft = divide_line.value.offsetLeft; //获取盒子的初始left值
 
   console.log(e, startX, divideLineLeft);
+
+  let moveLeft = startX - lastStartX; // 拿到鼠标移动的 moveLeft，e.touches[0]是兼容移动端，加上 || 0 是因为在 PC 端鼠标向左移出浏览器时会报错
+  let l = (divideLineLeft + moveLeft) / imgBoxWidth.value * 100;
+  left.value = range(l, min, 100 - min);
+  console.log(lastStartX, startX, moveLeft)
   // 鼠标移动事件
   let onmousemove = (e) => {
-    let moveLeft = (e.clientX || (e.touches && e.touches[0].pageX) || 0) - startX; // 拿到鼠标移动的 moveLeft，e.touches[0]是兼容移动端，加上 || 0 是因为在 PC 端鼠标向左移出浏览器时会报错
+    lastStartX = e.clientX || (e.touches && e.touches[0].pageX) || 0
+    let moveLeft = lastStartX - startX; // 拿到鼠标移动的 moveLeft，e.touches[0]是兼容移动端，加上 || 0 是因为在 PC 端鼠标向左移出浏览器时会报错
     let l = (divideLineLeft + moveLeft) / imgBoxWidth.value * 100;
     left.value = range(l, min, 100 - min);
   }
